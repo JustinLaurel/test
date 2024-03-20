@@ -65,54 +65,69 @@ export default function Chart(props) {
 
   console.log(`accountResponse`, accountResponse);
 
-  const center = {};
+  function Legend(props) {
+    const { color, children } = props;
+    return (
+      <main className="legend">
+        <div className="color" style={{ backgroundColor: color }}></div>
+        <div className="label">{children}</div>
+      </main>
+    );
+  }
 
   return (
-    <div className="chart-container">
-      <div className="background">
-        <div className="background-title">Hi</div>
-        <div className="background-amount-wrapper">
-          <div>RM1,540.30</div>
+    <main className="container">
+      <div className="chart-wrapper">
+        <div className="background">
+          <div className="background-title">Jumlah Keseluruhan</div>
+          <div className="background-amount-wrapper">
+            <div>RM1,540.30</div>
+          </div>
         </div>
+        <Doughnut
+          id="canvas"
+          data={fakeData}
+          plugins={[doughnutLabel]}
+          options={{
+            tooltips: {
+              displayColors: false,
+              callbacks: {
+                label: (tooltipItem, data) => {
+                  return getFormattedCurrency(
+                    data.datasets[tooltipItem.datasetIndex].data[
+                      tooltipItem.index
+                    ],
+                    true
+                  );
+                },
+              },
+              bodyFontSize: "10",
+              caretSize: 0,
+              caretPadding: -60,
+            },
+            elements: {
+              center: {
+                text: "Red is 2/3 the total numbers",
+                color: "white", // Default is #000000
+                fontStyle: "Arial", // Default is Arial
+                sidePadding: 20, // Default is 20 (as a percentage)
+                minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
+                lineHeight: 25, // Default is 25 (in px), used for when text wraps
+              },
+            },
+            legend: {
+              display: false,
+            },
+            responsive: true,
+          }}
+        />
       </div>
-      <Doughnut
-        id="canvas"
-        width={750}
-        height={750}
-        data={fakeData}
-        plugins={[doughnutLabel]}
-        options={{
-          tooltips: {
-            displayColors: false,
-            callbacks: {
-              title: function (tooltipItems, data) {
-                return "";
-              },
-              label: function (tooltipItem, data) {
-                return getFormattedCurrency(
-                  data.datasets[tooltipItem.datasetIndex].data[
-                    tooltipItem.index
-                  ],
-                  true
-                );
-              },
-            },
-          },
-          elements: {
-            center: {
-              text: "Red is 2/3 the total numbers",
-              color: "white", // Default is #000000
-              fontStyle: "Arial", // Default is Arial
-              sidePadding: 20, // Default is 20 (as a percentage)
-              minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
-              lineHeight: 25, // Default is 25 (in px), used for when text wraps
-            },
-          },
-          legend: {
-            display: false,
-          },
-        }}
-      />
-    </div>
+      <section className="legend-container">
+        <Legend color="red">Cake</Legend>
+        <Legend color="blue">Legend two</Legend>
+        <Legend color="green">Legend three</Legend>
+        <Legend color="teal">Legend four</Legend>
+      </section>
+    </main>
   );
 }
