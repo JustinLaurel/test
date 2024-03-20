@@ -1,15 +1,3 @@
-export const DEFAULT_SLICE_COLORS = [
-  "#00D1DC",
-  "#FFC32E",
-  "#425CAA",
-  "#FF8E2E",
-  "#2E883C",
-  "#72D081",
-  "#8472D0",
-  "#918DA2",
-  "#CE32AA",
-  "#FF93DE",
-];
 export const doughnutLabel = {
   id: "doughnutLabel",
   beforeDraw: function (chart) {
@@ -19,7 +7,6 @@ export const doughnutLabel = {
 
       // Get options from the center object in options
       var centerConfig = chart.config.options.elements.center;
-      console.log(`centerConfig`, centerConfig);
       var fontStyle = centerConfig.fontStyle || "Arial";
       var txt = centerConfig.text;
       var color = centerConfig.color || "#000";
@@ -87,15 +74,4 @@ export const doughnutLabel = {
       }
     }
   },
-};
-
-export const fakeData = {
-  labels: ["Red", "Blue", "Yellow", "Green"],
-  datasets: [
-    {
-      data: [300, 50, 100],
-      backgroundColor: DEFAULT_SLICE_COLORS.slice(0, 3),
-      borderWidth: 0,
-    },
-  ],
 };

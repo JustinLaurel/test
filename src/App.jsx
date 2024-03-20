@@ -1,16 +1,93 @@
-import { useState } from 'react'
-import './App.css'
-import Chart from './chart/chart'
+import { useMemo, useState } from "react";
+import "./App.css";
+import Chart from "./chart/chart";
+import { getFormattedCurrency, getNumberFromCurrency } from "./util";
 
 function App() {
+  const chartData = useMemo(() => {
+    const INSURANCE_SCHEME = "98";
+    const noInsurance = data.pinjaman.allPinjamanScheme.filter(
+      (account) => account.schemeCode !== INSURANCE_SCHEME
+    );
+    return noInsurance.map((datum) => {
+      const hasLoanCompleted = Boolean(datum.tarikhMulaJbb);
+      let intermediateData = null;
+
+      if (hasLoanCompleted) {
+        intermediateData = [
+          {
+            label: "Jumlah Bayaran Balik",
+            value: getNumberFromCurrency(datum.totalDisbursed),
+            color: "#0071BB",
+          },
+          {
+            label: "Jumlah Belum Dikreditkan",
+            value: datum.totalLoan - datum.totalDisbursed,
+            color: "#ADADAD",
+          },
+        ];
+      } else {
+        intermediateData = [
+          {
+            label: "Belum Dibayar",
+            value: getNumberFromCurrency(datum.balance),
+            color: "#FB840E",
+          },
+          {
+            label: "Jumlah Bayaran Balik",
+            value: Math.max(
+              getNumberFromCurrency(datum.totalLoan) -
+                getNumberFromCurrency(datum.balance),
+              0
+            ),
+            color: "#0071BB",
+          },
+          {
+            label: "Jumlah Tunggakan",
+            value: getNumberFromCurrency(datum.totalArreas),
+            color: "#FF0000",
+          },
+        ];
+      }
+
+      const excludeZeroes = intermediateData.filter((item) => item.value > 0);
+      const labels = [];
+      const data = [];
+      const backgroundColor = [];
+      excludeZeroes.forEach((item) => {
+        labels.push(item.label);
+        data.push(item.value);
+        backgroundColor.push(item.color);
+      });
+      const chartData = {
+        labels,
+        datasets: [
+          {
+            data,
+            backgroundColor,
+            borderWidth: 0,
+          },
+        ],
+      };
+
+      return {
+        label: datum.eduLevel,
+        centerAmt: getFormattedCurrency(datum.totalLoan),
+        pieChartData: chartData,
+      };
+    });
+  }, [data]);
+  console.log(`chartData`, chartData);
   return (
     <main>
-      <Chart data={data} />
+      {chartData.map((datum) => {
+        return <Chart key={datum.label} data={datum} />;
+      })}
     </main>
-  )
+  );
 }
 
-export default App
+export default App;
 
 const data = {
   response_code: "00",
