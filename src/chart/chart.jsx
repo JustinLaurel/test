@@ -69,7 +69,12 @@ export default function Chart(props) {
 
   return (
     <div className="chart-container">
-      <div className="background"></div>
+      <div className="background">
+        <div className="background-title">Hi</div>
+        <div className="background-amount-wrapper">
+          <div>RM1,540.30</div>
+        </div>
+      </div>
       <Doughnut
         id="canvas"
         width={750}
@@ -79,6 +84,19 @@ export default function Chart(props) {
         options={{
           tooltips: {
             displayColors: false,
+            callbacks: {
+              title: function (tooltipItems, data) {
+                return "";
+              },
+              label: function (tooltipItem, data) {
+                return getFormattedCurrency(
+                  data.datasets[tooltipItem.datasetIndex].data[
+                    tooltipItem.index
+                  ],
+                  true
+                );
+              },
+            },
           },
           elements: {
             center: {
@@ -89,6 +107,9 @@ export default function Chart(props) {
               minFontSize: 20, // Default is 20 (in px), set to false and text will not wrap.
               lineHeight: 25, // Default is 25 (in px), used for when text wraps
             },
+          },
+          legend: {
+            display: false,
           },
         }}
       />

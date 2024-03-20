@@ -59,14 +59,13 @@ export const doughnutLabel = {
       var centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
       var centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
       ctx.font = fontSizeToUse + "px " + fontStyle;
-      ctx.fillStyle = color;
+      // ctx.fillStyle = color;
 
       var canvas = document.getElementById("canvas");
-      console.log(`canvas width, height`, canvas.width, canvas.height);
       // canvas.style.backgroundColor = 'black';
 
       if (!wrapText) {
-        ctx.fillText(txt, centerX, centerY);
+        // ctx.fillText(txt, centerX, centerY);
         return;
       }
 
@@ -86,16 +85,6 @@ export const doughnutLabel = {
           line = testLine;
         }
       }
-
-      // Move the center up depending on line height and number of lines
-      centerY -= (lines.length / 2) * lineHeight;
-
-      for (var n = 0; n < lines.length; n++) {
-        ctx.fillText(lines[n], centerX, centerY);
-        centerY += lineHeight;
-      }
-      //Draw text in center
-      ctx.fillText(line, centerX, centerY);
     }
   },
 };

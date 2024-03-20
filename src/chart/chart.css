@@ -5,9 +5,24 @@
 }
 .background {
   position: absolute;
-  min-height: 460px;
-  min-width: 460px;
-  background-color: blue;
-  text-align: center;
-  z-index: -999999
+  height: 400px;
+  width: 400px;
+  filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.16 ));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+  background-color: #4AC2AE;
+  border-radius: 50%;
+  flex-direction: column;
+  /* transform: translate(0px, 100px); */
+}
+.background-title {
+  color: white;
+}
+.background-amount-wrapper {
+  background-color: white;
+  padding: 5px 20px;
+  border-radius: 6px;
+  filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.16 ));
 }
