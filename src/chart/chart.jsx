@@ -19,7 +19,7 @@ export default function Chart(props) {
   }
 
   return (
-    <main className="container">
+    <main className="pieChart-container">
       <div className="pieChart">
         <div className="pieChart-innerPie">
           <div className="innerPie-title">jumlah keseluruhan</div>

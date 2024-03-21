@@ -15,21 +15,28 @@ export default function BarChart(props) {
       return null;
     }
 
-    const keys = Object.keys(tooltipResponseData.pinjamanUjrahDetails);
-    const tooltipData = keys.map((key) => {
-      const disbursement = tooltipResponseData.pinjamanUjrahDetails[key];
-      return {
-        semester:
-          disbursement.disbursementSemester +
-          "/" +
-          disbursement.creditedDate.slice(-2),
-        creditDate: formatToTooltipDate(disbursement.creditedDate),
-        disbursementAmount:
-          getFormattedCurrency(disbursement.creditAmount, true) + " (SELESAI)",
-      };
-    });
-    return [tooltipData];
-  }, [tooltipResponseData.pinjamanUjrahDetails]);
+    const mapped = tooltipResponseData.map((response) => {
+      if (!response) {
+        return null;
+      }
+      const disbursementList = response.pinjamanUjrahDetails;
+      const keys = Object.keys(disbursementList);
+      const datum = keys.map((key) => {
+        const disbursement = disbursementList[key];
+        return {
+          semester:
+            disbursement.disbursementSemester +
+            "/" +
+            disbursement.creditedDate.slice(-2),
+          creditDate: formatToTooltipDate(disbursement.creditedDate),
+          disbursementAmount:
+            getFormattedCurrency(disbursement.creditAmount, true) + " (SELESAI)",
+        };
+      });
+      return datum;  
+    })
+    return mapped;
+  }, [tooltipResponseData]);
   const mainData = useMemo(() => {
     if (!mainResponseData) {
       return null;
@@ -52,6 +59,9 @@ export default function BarChart(props) {
 
       const label = chunkString(account.eduLevel, 15);
       labels.push(label);
+
+      console.log(`tooltipData[index]`, tooltipData[index]);
+      console.log(`label`, label);
 
       mainDatasetData.push({
         x: label,
@@ -109,7 +119,7 @@ export default function BarChart(props) {
   }
 
   return (
-    <main className="container">
+    <main className="barChart-container">
       <section className="header">
         JUMLAH PENGELUARAN PINJAMAN{" "}
         {getFormattedCurrency(mainData.jumlahPengeluaranPinjaman, true)}

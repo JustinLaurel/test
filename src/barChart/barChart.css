@@ -1,5 +1,7 @@
-.container {
+.barChart-container {
   width: 100%;
+  background-color: white;
+  border-radius: 12px;
   min-height: 300px;
   height: max-content;
   padding: 15px;
