@@ -1,0 +1,65 @@
+.container {
+  width: 100%;
+  min-height: 300px;
+  height: max-content;
+  padding: 15px;
+  max-width: 800px;
+
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.header {
+  font-weight: bold;
+  text-align: left;
+}
+#chartjs-tooltip-placeholder {
+  display: none; /* Prevent chartjs-tooltip-placeholder::after's arrow pointer from being visible on first paint */
+  border-radius: 6px;
+  pointer-events: none;
+  transform: translate(-50%, 0);
+  z-index: 1000;
+  position: absolute;
+  transition: all 0.1s ease;
+}
+#chartjs-tooltip-placeholder::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  z-index: 1000;
+  border-color: black transparent transparent transparent;
+}
+
+
+.tooltip {
+  background-color: black;
+  color: white;
+  font-size: 0.7rem;
+  line-height: 0.8rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  width: max-content;
+
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.2rem;
+}
+.tooltip-headers {
+  display: grid;
+  grid-template-columns: 0.7fr 0.95fr 2fr;
+  column-gap: 0.4rem;
+  font-weight: bold;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+.body-row {
+  display: grid;
+  column-gap: 0.4rem;
+  grid-template-columns: 0.7fr 0.95fr 2fr;
+  text-align: left;
+}

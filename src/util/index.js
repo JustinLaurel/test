@@ -1,5 +1,5 @@
 const NEGATIVE_SIGN = "-";
-const RM = 'RM';
+const RM = "RM";
 export function getFormattedCurrency(amount, showTrailingZero = false) {
   if (typeof amount == "number") {
     amount = "" + (showTrailingZero ? amount.toFixed(2) : amount);
@@ -23,4 +23,13 @@ export function getNumberFromCurrency(amount) {
   } else {
     return Number(amount.replace(/[^\d.-]/g, ""));
   }
+}
+
+/*
+ * Splits string to array of strings if it exceeds maxLength
+ */
+export function chunkString(str, maxLength) {
+  if (!str) return "";
+  const chunks = str.match(new RegExp(`.{1,${maxLength}}(?:\\s|$)`, "g"));
+  return chunks;
 }
